@@ -59,8 +59,8 @@ public class UserController {
     @ApiOperation("登录")
     @ApiImplicitParam(name = "login", value = "单个用户信息", dataType = "User")
     @PostMapping("login")
-    public User login(@RequestBody User user){
-        return userService.login(user);
+    public Boolean login(@RequestBody User user){
+        return true;
     }
 
 }
