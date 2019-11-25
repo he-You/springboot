@@ -17,13 +17,21 @@ import java.io.Serializable;
  */
 @Data
 public class Result implements Serializable {
-    //标志位
+    /**
+     * 标志位
+     */
     private boolean success;
-
+    /**
+     * 返回状态码
+     */
     private String code;
-    //返回信息
+    /**
+     * 返回信息
+     */
     private String msg;
-    //数据集
+    /**
+     * 数据集
+     */
     private Object data;
     private PageData page;
     public Result() {
