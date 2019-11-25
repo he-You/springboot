@@ -1,6 +1,6 @@
 package com.heyou.springboot.controller;
 
-import com.heyou.springboot.entity.ResponseInfo.Result;
+import com.heyou.springboot.entity.base.Result;
 import com.heyou.springboot.entity.User;
 import com.heyou.springboot.sevice.impl.UserServiceImpl;
 import io.swagger.annotations.Api;

@@ -1,4 +1,4 @@
-package com.heyou.springboot.entity.ResponseInfo;
+package com.heyou.springboot.entity.base;
 /**
  * 简要说明. <br>
  * 返回体：分页对象

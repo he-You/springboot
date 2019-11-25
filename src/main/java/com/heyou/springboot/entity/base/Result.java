@@ -1,4 +1,4 @@
-package com.heyou.springboot.entity.ResponseInfo;
+package com.heyou.springboot.entity.base;
 
 import com.github.pagehelper.PageInfo;
 import lombok.Data;
