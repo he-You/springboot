@@ -1,6 +1,7 @@
 package com.heyou.springboot.entity.base;
 
 import com.github.pagehelper.PageInfo;
+import io.swagger.models.auth.In;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -24,7 +25,7 @@ public class Result implements Serializable {
     /**
      * 返回状态码
      */
-    private String code;
+    private Integer code;
     /**
      * 返回信息
      */
@@ -59,5 +60,12 @@ public class Result implements Serializable {
     }
     public void setPageInfo(PageInfo<?> pageInfo) {
         this.page = new PageData(pageInfo.getPageNum(),pageInfo.getPageSize(),pageInfo.getPages(),pageInfo.getTotal());
+    }
+
+    public Result error(Integer errorCode, String message) {
+        Result result = new Result();
+        result.setMsg(message);
+        result.setCode(errorCode);
+        return result;
     }
 }

@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by heyou on 2019/6/14 0014.
+ *
+ * @author heyou
+ * @date 2019/6/14 0014
  */
 @Api("用户信息管理")
 @RestController
@@ -58,7 +60,7 @@ public class UserController {
 
     @ApiOperation("登录")
     @ApiImplicitParam(name = "login", value = "单个用户信息", dataType = "User")
-    @PostMapping("login")
+    @GetMapping("login")
     public Boolean login(@RequestBody User user){
         return true;
     }
