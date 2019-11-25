@@ -51,11 +51,11 @@ public class AopConfig {
         threadInfo.put("httpMethod", request.getMethod());
         logger.info("REMOTE_ADDR : " + request.getRemoteAddr());
         threadInfo.put("ip", request.getRemoteAddr());
-        logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "."
+        logger.info("CLASS_METHOD(Api方法) : " + joinPoint.getSignature().getDeclaringTypeName() + "."
                 + joinPoint.getSignature().getName());
         threadInfo.put("classMethod",
                 joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        logger.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
+        logger.info("ARGS(参数列表) : " + Arrays.toString(joinPoint.getArgs()));
         threadInfo.put("args", Arrays.toString(joinPoint.getArgs()));
         logger.info("USER_AGENT"+request.getHeader("User-Agent"));
         threadInfo.put("userAgent", request.getHeader("User-Agent"));
