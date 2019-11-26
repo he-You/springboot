@@ -1,11 +1,20 @@
 package com.heyou.springboot.interceptor;
 
+import com.auth0.jwt.exceptions.AlgorithmMismatchException;
+import com.auth0.jwt.exceptions.SignatureVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.heyou.springboot.constant.Enum.CodeEnum;
+import com.heyou.springboot.controller.exception.SysException;
+import com.heyou.springboot.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,6 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 @Component
 public class LoginHandlerInterceptor implements HandlerInterceptor {
+    @Resource
+    JwtUtil jwtUtil;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
@@ -26,10 +37,33 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        logger.info("在请求处理之前进行调用（Controller方法调用之前）");
-        request.setAttribute("startTime", System.currentTimeMillis());
-        logger.info("已收到请求："+request);
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
+        log.info("Token Checkout processing");
+        String token = request.getHeader("token");
+        if(StringUtils.isEmpty(token)){
+            return true;
+        }
+//        if (StringUtils.isEmpty(token)) {
+//            throw new SysException(CodeEnum.TOKEN_ISEMPTY);
+//        }
+        String tokenInServletContext = (String)request.getServletContext().getAttribute(token);
+        if(StringUtils.isEmpty(tokenInServletContext)) {
+            throw new SysException(CodeEnum.ILLEGAL_TOKEN);
+        }
+        try {
+            jwtUtil.verifyToken(token);
+        } catch (AlgorithmMismatchException e) {
+            log.error("Token Checkout processing AlgorithmMismatchException 异常！"+e.getLocalizedMessage());
+            throw new SysException(CodeEnum.ILLEGAL_TOKEN);
+        }catch (TokenExpiredException e) {
+            log.info("token已经过期");
+            throw new SysException(CodeEnum.EXPIRE_TOKEN);
+        }catch (SignatureVerificationException e) {
+            log.error("Token Checkout processing SignatureVerificationException 异常！"+e.getLocalizedMessage());
+            throw new SysException(CodeEnum.ILLEGAL_TOKEN);
+        }catch (Exception e) {
+            log.error("Token Checkout processing 未知异常！"+e.getLocalizedMessage());
+            throw e;
+        }
         return true;
     }
 
@@ -96,7 +130,8 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
         }
     }
 
-    *//**
+    */
+    /**
      * 	处理未登录,或登录失效
      * @param response
      * @param obj
