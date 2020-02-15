@@ -6,9 +6,12 @@ import com.heyou.springboot.sevice.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
- * Created by heyou on 2019/6/14 0014.
+ *
+ * @author heyou
+ * @date 2019/6/14 0014
  */
 @Service
 public class UserServiceImpl implements UserService {
@@ -16,7 +19,7 @@ public class UserServiceImpl implements UserService {
     UserDao userDao;
 
     @Override
-    public User login(User user) {
-        return userDao.login(user);
+    public List<User> getUserList() {
+        return userDao.userList();
     }
 }

@@ -2,9 +2,14 @@ package com.heyou.springboot.dao;
 
 import com.heyou.springboot.entity.User;
 
+import java.util.List;
+
 /**
- * Created by heyou on 2019/6/14 0014.
+ *
+ * @author heyou
+ * @date 2019/6/14 0014
  */
 public interface UserDao {
-    User login(User user);
+
+    List<User> userList();
 }

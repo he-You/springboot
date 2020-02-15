@@ -48,7 +48,7 @@ public class UserController {
     @GetMapping("list")
     public Result userList() {
         Result result = new Result();
-        result.setData(userList);
+        result.setData(userService.getUserList());
         result.setSuccess(true);
         result.setMsg("成功");
         return result;
