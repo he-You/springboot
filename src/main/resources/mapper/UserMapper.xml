@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.heyou.springboot.dao.UserDao">
-   <!-- <select id="login" parameterType="com.heyou.springboot.entity.User" resultType="com.heyou.springboot.entity.User">
-         select * from user
-    </select>-->
+    <select id="userList" resultType="com.heyou.springboot.entity.User">
+        select
+            id userId,
+            name userName,
+            password
+        from user
+    </select>
 </mapper>
