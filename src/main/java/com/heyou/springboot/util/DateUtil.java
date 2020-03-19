@@ -4,11 +4,7 @@ import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author heyou
@@ -638,30 +634,33 @@ public class DateUtil {
                 // 处理间隔符
                 if (format.equals("1"))
                     sreturn = sreturn + "年";
-                else if (format.equals("2"))
+                else if (format.equals("2")) {
                     sreturn = sreturn + "-";
-                else if (format.equals("3"))
+                } else if (format.equals("3")) {
                     sreturn = sreturn + "/";
-                else if (format.equals("5"))
+                } else if (format.equals("5")) {
                     sreturn = sreturn + ".";
+                }
             }
             // 处理月份
             if (yf.equals("1")) {
                 sreturn = sreturn + s_yf;
                 if (format.equals("1"))
                     sreturn = sreturn + "月";
-                else if (format.equals("2"))
+                else if (format.equals("2")) {
                     sreturn = sreturn + "-";
-                else if (format.equals("3"))
+                } else if (format.equals("3")) {
                     sreturn = sreturn + "/";
-                else if (format.equals("5"))
+                } else if (format.equals("5")) {
                     sreturn = sreturn + ".";
+                }
             }
             // 处理日期
             if (rq.equals("1")) {
                 sreturn = sreturn + s_rq;
-                if (format.equals("1"))
+                if (format.equals("1")) {
                     sreturn = sreturn + "日";
+                }
             }
         } else {
             // 不是空值，也是一个合法的日期值，则先将其转换为标准的时间格式
@@ -674,30 +673,33 @@ public class DateUtil {
                 // 处理间隔符
                 if (format.equals("1"))
                     sreturn = sreturn + "年";
-                else if (format.equals("2"))
+                else if (format.equals("2")) {
                     sreturn = sreturn + "-";
-                else if (format.equals("3"))
+                } else if (format.equals("3")) {
                     sreturn = sreturn + "/";
-                else if (format.equals("5"))
+                } else if (format.equals("5")) {
                     sreturn = sreturn + ".";
+                }
             }
             // 处理月份
             if (yf.equals("1")) {
                 sreturn = sreturn + s_yf;
                 if (format.equals("1"))
                     sreturn = sreturn + "月";
-                else if (format.equals("2"))
+                else if (format.equals("2")) {
                     sreturn = sreturn + "-";
-                else if (format.equals("3"))
+                } else if (format.equals("3")) {
                     sreturn = sreturn + "/";
-                else if (format.equals("5"))
+                } else if (format.equals("5")) {
                     sreturn = sreturn + ".";
+                }
             }
             // 处理日期
             if (rq.equals("1")) {
                 sreturn = sreturn + s_rq;
-                if (format.equals("1"))
+                if (format.equals("1")) {
                     sreturn = sreturn + "日";
+                }
             }
         }
         return sreturn;
@@ -816,5 +818,143 @@ public class DateUtil {
             reStr = getStringDateShort();
         }
         return reStr;
+    }
+
+    /**
+     * 获取今天之前n天0点
+     */
+    public static Date getBeforeDaysStartTime(Integer n){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)-n,0,0,0);
+        return new Date(calendar.getTime().getTime());
+    }
+    /**
+     * 获取今天之前n天23：59：59
+     */
+    public static Date getBeforeDaysEndTime(Integer n){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)-n,23,59,59);
+        return new Date(calendar.getTime().getTime());
+    }
+
+    /**
+     * 获取当月开始时间戳
+     *
+     * @param timeStamp 毫秒级时间戳
+     * @param timeZone  如 GMT+8:00
+     * @return
+     */
+    public static Date getMonthStartTime(Long timeStamp, String timeZone) {
+        Calendar calendar = Calendar.getInstance();// 获取当前日期
+        calendar.setTimeZone(TimeZone.getTimeZone(timeZone));
+        calendar.setTimeInMillis(timeStamp);
+        calendar.add(Calendar.YEAR, 0);
+        calendar.add(Calendar.MONTH, 0);
+        // 设置为1号,当前日期既为本月第一天
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
+
+    /**
+     * 获取指定时间
+     * @param timeStamp long型时间戳
+     * @param timeZone 时区
+     * @param targetYear 指定年
+     * @param targetMonth 指定月
+     * @param targetDay 指定天
+     * @param targetHour 指定小时
+     * @param targetMin 指定分钟
+     * @param targetSecond 指定秒
+     * @return Date
+     */
+    public static Date getTargetTime(Long timeStamp, String timeZone,
+                                     Integer targetYear,Integer targetMonth,Integer targetDay,
+                                     Integer targetHour,Integer targetMin,Integer targetSecond) {
+        Calendar calendar = Calendar.getInstance();// 获取当前日期
+        calendar.setTimeZone(TimeZone.getTimeZone(timeZone));
+        calendar.setTimeInMillis(timeStamp);
+        calendar.add(Calendar.YEAR, -(targetYear == null ? 0 : targetYear));
+        calendar.add(Calendar.MONTH, -(targetMonth == null ? 0 : targetMonth));
+        // 设置为1号,当前日期既为本月第一天
+        calendar.set(Calendar.DAY_OF_MONTH, (targetDay == null ? 1 : targetDay));
+        calendar.set(Calendar.HOUR_OF_DAY, (targetHour == null ? 0 : targetHour));
+        calendar.set(Calendar.MINUTE, (targetMin == null ? 0 : targetMin));
+        calendar.set(Calendar.SECOND, (targetSecond == null ? 0 : targetSecond));
+        return calendar.getTime();
+    }
+
+    /**
+     * 获取当月的结束时间戳
+     *
+     * @param timeStamp 毫秒级时间戳
+     * @param timeZone  如 GMT+8:00
+     * @return
+     */
+    public static Long getMonthEndTime(Long timeStamp, String timeZone) {
+        Calendar calendar = Calendar.getInstance();// 获取当前日期
+        calendar.setTimeZone(TimeZone.getTimeZone(timeZone));
+        calendar.setTimeInMillis(timeStamp);
+        calendar.add(Calendar.YEAR, 0);
+        calendar.add(Calendar.MONTH, 0);
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));// 获取当前月最后一天
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        return calendar.getTimeInMillis();
+    }
+
+    /**
+     * 获取当年的开始时间戳
+     *
+     * @param timeStamp 毫秒级时间戳
+     * @param timeZone  如 GMT+8:00
+     * @return
+     */
+    public static Long getYearStartTime(Long timeStamp, String timeZone) {
+        Calendar calendar = Calendar.getInstance();// 获取当前日期
+        calendar.setTimeZone(TimeZone.getTimeZone(timeZone));
+        calendar.setTimeInMillis(timeStamp);
+        calendar.add(Calendar.YEAR, 0);
+        calendar.add(Calendar.DATE, 0);
+        calendar.add(Calendar.MONTH, 0);
+        calendar.set(Calendar.DAY_OF_YEAR, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTimeInMillis();
+    }
+
+    /**
+     * 获取当年的最后时间戳
+     *
+     * @param timeStamp 毫秒级时间戳
+     * @param timeZone  如 GMT+8:00
+     * @return
+     */
+    public static Long getYearEndTime(Long timeStamp, String timeZone) {
+        Calendar calendar = Calendar.getInstance();// 获取当前日期
+        calendar.setTimeZone(TimeZone.getTimeZone(timeZone));
+        calendar.setTimeInMillis(timeStamp);
+        int year = calendar.get(Calendar.YEAR);
+        calendar.clear();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        calendar.roll(Calendar.DAY_OF_YEAR, -1);
+        return calendar.getTimeInMillis();
+    }
+
+    public static void main(String[] args) {
+
+        Date date =  getTargetTime(new Date().getTime(),"GMT+8:00",1,2,3,4,5,6);
+        System.out.println(date);
     }
 }
