@@ -877,8 +877,9 @@ public class DateUtil {
         Calendar calendar = Calendar.getInstance();// 获取当前日期
         calendar.setTimeZone(TimeZone.getTimeZone(timeZone));
         calendar.setTimeInMillis(timeStamp);
+        calendar.set(Calendar.MONTH,targetMonth-1);
         calendar.add(Calendar.YEAR, -(targetYear == null ? 0 : targetYear));
-        calendar.add(Calendar.MONTH, -(targetMonth == null ? 0 : targetMonth));
+        //calendar.add(Calendar.MONTH, 12);
         // 设置为1号,当前日期既为本月第一天
         calendar.set(Calendar.DAY_OF_MONTH, (targetDay == null ? 1 : targetDay));
         calendar.set(Calendar.HOUR_OF_DAY, (targetHour == null ? 0 : targetHour));
@@ -954,7 +955,10 @@ public class DateUtil {
 
     public static void main(String[] args) {
 
-        Date date =  getTargetTime(new Date().getTime(),"GMT+8:00",1,2,3,4,5,6);
+        Date date =  getTargetTime(new Date().getTime(),
+                "GMT+8:00",2,12,31,23,59,59);
         System.out.println(date);
+
+        System.out.println(getYearEndTime(System.currentTimeMillis(),"UTC"));
     }
 }

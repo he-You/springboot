@@ -45,10 +45,10 @@ public class UserController {
     }
 
     @ApiOperation("获取列表")
-    @GetMapping("list")
+    @GetMapping("/list")
     public Result userList() {
         Result result = new Result();
-        result.setData(userService.getUserList());
+        result.setData("成功");
         result.setSuccess(true);
         result.setMsg("成功");
         return result;

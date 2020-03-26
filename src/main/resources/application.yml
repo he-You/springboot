@@ -1,5 +1,5 @@
 server:
-  port: 8888
+  port: 8897
 #不推荐这种方式,拿到密钥就可以进行解密
 jasypt:
   encryptor:
