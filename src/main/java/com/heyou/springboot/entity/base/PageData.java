@@ -11,18 +11,18 @@ package com.heyou.springboot.entity.base;
  */
 public class PageData {
     //当前页码
-
-    private Integer pageIndex = 1; //默认页码 1
+    //默认页码 1
+    private Integer pageIndex = 1;
 
     //当前每页条数
+    //默认每页条数
+    private Integer pageSize = 10;
 
-    private Integer pageSize = 10; //默认每页条数
+    //默认为1
+    private Integer totalPage = 1;
 
-
-    private Integer totalPage = 1; //默认为1
-
-
-    private Long totalNum = 1L; //默认1
+    //默认1
+    private Long totalNum = 1L;
 
     //默认排序方向
     //private String order = Direction.DESC.toString();

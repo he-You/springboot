@@ -48,7 +48,11 @@ public class UserController {
     @GetMapping("/list")
     public Result userList() {
         Result result = new Result();
-        result.setData("成功");
+        ReqLogin reqLogin = new ReqLogin();
+        reqLogin.setToken("heyouisbest");
+        reqLogin.setPassword("1024");
+        reqLogin.setUserName("heyou");
+        result.setData(reqLogin);
         result.setSuccess(true);
         result.setMsg("成功");
         return result;

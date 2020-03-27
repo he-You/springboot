@@ -1,5 +1,6 @@
 package com.heyou.springboot.entity.requestInfo.ReqUser;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.io.Serializable;
  */
 @Data
 public class ReqLogin implements Serializable {
+    @JsonProperty("user_name")
     private String userName;
 
     private String password;
