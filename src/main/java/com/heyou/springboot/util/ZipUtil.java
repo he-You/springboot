@@ -6,9 +6,12 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
@@ -32,7 +35,6 @@ public class ZipUtil {
             String path = ze.getName();
             // 过滤 MacOS 解压出现的脏文件
             if(!(path.startsWith("__MACOSX/")|| path.endsWith(".DS_Store"))){
-                System.out.println(path);
                 if (!ze.isDirectory()) {
                     InputStream inputStream = zipFile.getInputStream(ze);
                     map.put(path,inputStream);
@@ -69,5 +71,37 @@ public class ZipUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 判断文件是否图片
+     * @param fileName 文件的名称
+     * @return boolean
+     */
+    private static boolean isImage(String fileName){
+        String reg = ".+(.JPEG|.jpeg|.JPG|.jpg)$";
+        Pattern pattern = Pattern.compile(reg);
+        Matcher matcher = pattern.matcher(fileName);
+        return matcher.find();
+    }
+
+    /**
+     * 图片文件流转 Base64存储
+     * @param inputStream
+     * @return
+     * @throws IOException
+     */
+    private String InputStreamTobase64(InputStream inputStream) throws IOException {
+        byte[] bytes = IOUtils.toByteArray(inputStream);
+        String encoded = Base64.getEncoder().encodeToString(bytes);
+        return encoded;
+    }
+
+    /**
+     * 解密
+     * @param base64Str base64 字符串
+     */
+    private void base64ToOutputStream(String base64Str){
+        byte[] decodedBytes = Base64.getDecoder().decode(base64Str);
     }
 }
