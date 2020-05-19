@@ -9,5 +9,5 @@ import java.util.List;
  */
 
 public interface UserService {
-    List<User> getUserList();
+    List<User> getUserList() throws Exception;
 }
