@@ -99,7 +99,7 @@ public class ZipUtil {
 
     /**
      * 解密
-     * @param base64Str base64 字符串
+ * @param base64Str base64 字符串
      */
     private void base64ToOutputStream(String base64Str){
         byte[] decodedBytes = Base64.getDecoder().decode(base64Str);
