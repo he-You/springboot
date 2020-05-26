@@ -18,6 +18,7 @@ public class SpringbootApplication {
 
     public static void main(String[] args) {
         System.out.println("启动中....");
+        System.setProperty("es.set.netty.runtime.available.processors", "false");
         SpringApplication.run(SpringbootApplication.class, args);
     }
 

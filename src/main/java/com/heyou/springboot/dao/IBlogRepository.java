@@ -2,6 +2,7 @@ package com.heyou.springboot.dao;
 
 import com.heyou.springboot.entity.Blog;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

@@ -1,5 +1,5 @@
 server:
-  port: 8897
+  port: 8802
 #不推荐这种方式,拿到密钥就可以进行解密
 jasypt:
   encryptor:
@@ -24,6 +24,8 @@ spring:
     host: 127.0.0.1
     port: 6379
     timeout: 10000
+  main:
+    allow-bean-definition-overriding: true
 
 #pagehelper分页插件
 pagehelper:

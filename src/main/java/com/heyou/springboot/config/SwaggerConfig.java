@@ -36,11 +36,14 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .pathMapping("/")
                 .globalOperationParameters(setHeaderToken())
-                .select() // 选择那些路径和api会生成document
-                .apis(RequestHandlerSelectors.any())// 对所有api进行监控
+                // 选择那些路径和api会生成document
+                .select()
+                // 对所有api进行监控
+                .apis(RequestHandlerSelectors.any())
                 //不显示错误的接口地址
-                .paths(Predicates.not(PathSelectors.regex("/error.*")))//错误路径不监控
-                .paths(PathSelectors.regex("/.*"))// 对根下所有路径进行监控
+                .paths(Predicates.not(PathSelectors.regex("/error.*")))
+                // 对根下所有路径进行监控
+                .paths(PathSelectors.regex("/.*"))
                 .build();
     }
 
