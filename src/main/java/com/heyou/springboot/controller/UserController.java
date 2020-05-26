@@ -80,7 +80,7 @@ public class UserController {
 
     @ApiOperation("登录")
     @ApiImplicitParam(name = "login", value = "单个用户信息", dataType = "User")
-    @RequestMapping("login")
+    @PostMapping("login")
     public Result login(@RequestBody ReqLogin userInfo){
         Result result= new Result();
         if(valid(userInfo.getUserName(),userInfo.getPassword())) {
