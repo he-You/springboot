@@ -9,7 +9,7 @@ import java.util.List;
  * @author heyou
  * @date 2019/6/14 0014
  */
-public interface UserDao {
+public interface IUserDao {
 
     List<User> userList();
 }

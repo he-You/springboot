@@ -1,8 +1,10 @@
 package com.heyou.springboot.sevice.impl;
 
-import com.heyou.springboot.dao.UserDao;
+import com.heyou.springboot.dao.IUserDao;
 import com.heyou.springboot.entity.User;
 import com.heyou.springboot.sevice.UserService;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,10 +18,11 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     @Resource
-    UserDao userDao;
+    private IUserDao userDao;
 
     @Override
-    public List<User> getUserList() {
+    @Retryable(value = Exception.class,maxAttempts = 3,backoff = @Backoff(delay = 2000,multiplier = 1.5))
+    public List<User> getUserList() throws Exception{
         return userDao.userList();
     }
 }

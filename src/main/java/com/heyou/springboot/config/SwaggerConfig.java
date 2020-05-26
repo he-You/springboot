@@ -1,15 +1,23 @@
 package com.heyou.springboot.config;
 
+import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.schema.ModelRef;
+import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * swagger-ui配置
@@ -23,33 +31,33 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
     @Bean
-    public Docket controllerApi() {
+    public Docket createRestApi(){
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(new ApiInfoBuilder()
-                        .title("标题：何友的接口文档")
-                        .description("描述：Swagger接口文档")
-                        .contact(new Contact("heyou", null, null))
-                        .version("版本号:1.0")
-                        .build())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.heyou.springboot.controller"))
-                .paths(PathSelectors.any())
+                .apiInfo(apiInfo())
+                .pathMapping("/")
+                .globalOperationParameters(setHeaderToken())
+                .select() // 选择那些路径和api会生成document
+                .apis(RequestHandlerSelectors.any())// 对所有api进行监控
+                //不显示错误的接口地址
+                .paths(Predicates.not(PathSelectors.regex("/error.*")))//错误路径不监控
+                .paths(PathSelectors.regex("/.*"))// 对根下所有路径进行监控
                 .build();
     }
 
+    private List<Parameter> setHeaderToken() {
+        ParameterBuilder tokenPar = new ParameterBuilder();
+        List<Parameter> pars = new ArrayList<>();
+        tokenPar.name("Authorization").description("token").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+        pars.add(tokenPar.build());
+        return pars;
+    }
 
-    /**
-     * 防止@EnableMvc把默认的静态资源路径覆盖了，手动设置的方式
-     *
-     * @param registry
-     */
-    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // 解决静态资源无法访问
-        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
-        // 解决swagger无法访问
-        registry.addResourceHandler("/swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
-        // 解决swagger的js文件无法访问
-        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("标题：何友的接口文档")
+                .description("描述：Swagger接口文档")
+                .contact(new Contact("heyou", null, null))
+                .version("版本号:1.0")
+                .build();
     }
 }
