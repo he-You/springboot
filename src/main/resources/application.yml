@@ -26,6 +26,9 @@ spring:
     timeout: 10000
   main:
     allow-bean-definition-overriding: true
+  devtools:
+    restart:
+      enabled: true  #设置开启热部署
 
 #pagehelper分页插件
 pagehelper:
