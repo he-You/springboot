@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +61,7 @@ public class UserController {
 
     @ApiOperation("新增用户")
     @PostMapping("save")
-    public boolean save(User user) {
+    public boolean save(@Valid User user) {
         return userList.add(user);
     }
 

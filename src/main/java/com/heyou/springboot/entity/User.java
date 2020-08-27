@@ -1,5 +1,6 @@
 package com.heyou.springboot.entity;
 
+import com.heyou.springboot.validation.Mobile;
 import lombok.Data;
 
 /**
@@ -12,6 +13,8 @@ public class User {
     private int userId;
     private String username;
     private String password;
+    @Mobile
+    private String mobile;
 
     public User() {
     }
