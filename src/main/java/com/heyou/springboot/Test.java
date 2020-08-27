@@ -123,6 +123,11 @@ public  class Test {
         Map<String, TreeNew> allTreeNodeOld = getAllTreeNode(specificationOld.getTreeNewMap(), new HashMap<>());
         Map<String, TreeNew> allTreeNodeNew = getAllTreeNode(specificationOld.getTreeNewMap(), new HashMap<>());
         // 遍历新树，如果匹配到旧树的 key，将旧树对应的 map对象删除，旧树map剩下的就是新树删除的节点；再次遍历新树，将这个节点添加到指定的父节点下
+        for(Map.Entry<String,TreeNew> entry : allTreeNodeNew.entrySet()){
+            if(allTreeNodeOld.get(entry.getKey())!=null){
+                allTreeNodeOld.remove(entry.getKey());
+            }
+        }
         allTreeNodeOld.putAll(allTreeNodeNew);
         specificationNew.getSpecherarchy();
     }

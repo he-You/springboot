@@ -1,4 +1,4 @@
-package com.heyou.springboot.sevice.redis;
+package com.heyou.springboot.service.redis;
 
 
 import com.heyou.springboot.util.JsonUtil;

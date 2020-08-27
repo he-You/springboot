@@ -1,9 +1,7 @@
-package com.heyou.springboot.sevice.redis;
-import org.springframework.data.redis.core.RedisCallback;
+package com.heyou.springboot.service.redis;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.RedisSerializer;
+
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @author heyou

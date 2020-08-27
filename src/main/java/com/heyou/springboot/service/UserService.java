@@ -1,4 +1,4 @@
-package com.heyou.springboot.sevice;
+package com.heyou.springboot.service;
 
 import com.heyou.springboot.entity.User;
 
